@@ -6,7 +6,7 @@ const getCDMXDateTime = () => {
     return moment().tz('America/Mexico_City').format('DD-MM-YYYY HH:mm:ss z');
 };
 
-const sessionSchema = new Schema({
+const UsuariosSchema = new Schema({
     sessionId: {
         type: String,
         required: true,
@@ -57,11 +57,11 @@ const sessionSchema = new Schema({
 
 
 // Middleware para actualizar updatedAt antes de cada save
-sessionSchema.pre('save', function(next) {
+UsuariosSchema.pre('save', function(next) {
     this.updatedAt = moment().tz('America/Mexico_City').format('DD-MM-YYYY HH:mm:ss');
     next();
 });
 
 
 
-export default model("Session", sessionSchema);
+export default model("Session", UsuariosSchema);
