@@ -4,7 +4,7 @@
   "description": "Implementación de la Persistencia de los datos de sesión en una Base de Datos NoRelacional",
   "main": "index.js",
   "type": "module",
- "scripts": {
+  "scripts": {
     "dev": "node app.js"
   },
   "author": "Lorena Citlalli Galindo Gonzalez",

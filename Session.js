@@ -1,12 +1,13 @@
-import { model, Schema} from "mongoose";
+import { model, Schema } from "mongoose";
 import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment-timezone';
+import { encryptMacAddress } from './encryption.js';
 
 const getCDMXDateTime = () => {
     return moment().tz('America/Mexico_City').format('DD-MM-YYYY HH:mm:ss z');
 };
 
-const UsuariosSchema = new Schema({
+const sessionSchema = new Schema({
     sessionId: {
         type: String,
         required: true,
@@ -25,7 +26,10 @@ const UsuariosSchema = new Schema({
         ip: String,
         mac: {
             type: String,
-            required: true
+            required: true,
+            set: function(macAddress) {
+                return encryptMacAddress(macAddress);
+            }
         }
     },
     serverInfo: {
@@ -52,16 +56,16 @@ const UsuariosSchema = new Schema({
         default: () => getCDMXDateTime()
     }
 }, {
-    versionKey: false, 
+    versionKey: false
 });
 
 
-// Middleware para actualizar updatedAt antes de cada save
-UsuariosSchema.pre('save', function(next) {
+
+sessionSchema.pre('save', function(next) {
     this.updatedAt = moment().tz('America/Mexico_City').format('DD-MM-YYYY HH:mm:ss');
     next();
 });
 
 
 
-export default model("Session", UsuariosSchema);
+export default model("Session", sessionSchema);
