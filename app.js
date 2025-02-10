@@ -120,8 +120,8 @@ app.post('/login', async (req, res) => {
 
         const serverInfo = getServerInfo();
         const clientInfo = getClientInfo(req);
-
         const currentTime = getCDMXDateTime();
+        
         const sessionData = {
             sessionId: uuidv4(),
             email,
@@ -146,8 +146,7 @@ app.post('/login', async (req, res) => {
         req.session.userSession = session;
 
         res.status(200).json({
-            message: "Se ha logueado exitosamente",
-            session
+            message: "Se ha logueado exitosamente"
         });
     } catch (error) {
         console.error('Error en login:', error);
